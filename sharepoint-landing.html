@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- SharePoint Learning Hub | Hosted on GitHub Pages | Embed in SharePoint via iFrame -->
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SharePoint Learning Hub</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0e1a;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6}
+  a{color:#38bdf8;text-decoration:none}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,14,26,0.92);backdrop-filter:blur(8px);border-bottom:1px solid #1e293b;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+  .logo{font-size:1rem;font-weight:700;color:#38bdf8;letter-spacing:0.05em}
+  .nav-links{display:flex;gap:1.5rem;font-size:0.85rem;color:#94a3b8}
+  .nav-links a{color:#94a3b8;transition:color 0.2s}
+  .nav-links a:hover{color:#38bdf8}
+  .nav-cta{background:#38bdf8;color:#0a0e1a;font-weight:700;font-size:0.8rem;padding:7px 16px;border-radius:6px;border:none;cursor:pointer}
+
+  /* HERO */
+  .hero{text-align:center;padding:5rem 2rem 4rem;max-width:800px;margin:0 auto}
+  .hero-badge{display:inline-block;background:#0f172a;border:1px solid #1e3a5f;color:#38bdf8;font-size:0.75rem;padding:4px 14px;border-radius:20px;margin-bottom:1.5rem;letter-spacing:0.08em}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem;background:linear-gradient(135deg,#e2e8f0 0%,#38bdf8 60%,#818cf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{font-size:1.1rem;color:#94a3b8;max-width:580px;margin:0 auto 2rem}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:#38bdf8;color:#0a0e1a;font-weight:700;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-size:0.95rem;transition:opacity 0.2s}
+  .btn-primary:hover{opacity:0.85}
+  .btn-secondary{background:transparent;color:#e2e8f0;font-weight:600;padding:12px 28px;border-radius:8px;border:1px solid #334155;cursor:pointer;font-size:0.95rem;transition:border-color 0.2s}
+  .btn-secondary:hover{border-color:#38bdf8;color:#38bdf8}
+
+  /* PAIN POINTS */
+  .section{padding:4rem 2rem;max-width:1100px;margin:0 auto}
+  .section-label{font-size:0.75rem;letter-spacing:0.12em;color:#38bdf8;text-transform:uppercase;margin-bottom:0.5rem}
+  .section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:0.75rem}
+  .section-sub{color:#94a3b8;font-size:1rem;max-width:560px;margin-bottom:2.5rem}
+  .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+  .pain-card{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:1.2rem;display:flex;gap:0.75rem;align-items:flex-start}
+  .pain-icon{font-size:1.3rem;margin-top:2px;flex-shrink:0}
+  .pain-card h4{font-size:0.9rem;font-weight:600;color:#f1f5f9;margin-bottom:0.3rem}
+  .pain-card p{font-size:0.82rem;color:#64748b;line-height:1.5}
+
+  /* FEATURES */
+  .features-bg{background:#060912;padding:4rem 2rem}
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;max-width:1100px;margin:0 auto}
+  .feat-card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s;cursor:default}
+  .feat-card:hover{border-color:#38bdf8;transform:translateY(-3px)}
+  .feat-icon{width:40px;height:40px;border-radius:8px;background:#0c2a3f;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+  .feat-card h3{font-size:0.95rem;font-weight:700;color:#e2e8f0;margin-bottom:0.4rem}
+  .feat-card p{font-size:0.82rem;color:#64748b;line-height:1.55}
+
+  /* GUIDES */
+  .guide-list{display:flex;flex-direction:column;gap:0.75rem;max-width:800px;margin:0 auto}
+  .guide-item{background:#0f172a;border:1px solid #1e293b;border-radius:10px;overflow:hidden}
+  .guide-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;transition:background 0.15s}
+  .guide-header:hover{background:#141d2e}
+  .guide-title{display:flex;align-items:center;gap:0.75rem;font-size:0.9rem;font-weight:600;color:#e2e8f0}
+  .guide-num{background:#0c2a3f;color:#38bdf8;font-size:0.75rem;font-weight:700;width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .guide-arrow{color:#38bdf8;font-size:0.8rem;transition:transform 0.25s}
+  .guide-body{display:none;padding:0 1.25rem 1.25rem}
+  .guide-body.open{display:block}
+  .steps{list-style:none;counter-reset:step}
+  .steps li{counter-increment:step;display:flex;gap:0.75rem;margin-bottom:0.75rem;font-size:0.85rem;color:#94a3b8;line-height:1.55;align-items:flex-start}
+  .steps li::before{content:counter(step);background:#1e3a5f;color:#38bdf8;font-weight:700;font-size:0.75rem;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .steps li span.click{background:#0c1f30;color:#38bdf8;font-size:0.78rem;padding:2px 8px;border-radius:4px;font-family:monospace;border:1px solid #1e3a5f}
+  .steps li strong{color:#e2e8f0}
+
+  /* TIPS */
+  .tips-bg{background:#060912;padding:4rem 2rem}
+  .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:1100px;margin:0 auto}
+  .tip-card{background:#0a0e1a;border:1px solid #1e293b;border-radius:10px;padding:1.25rem;font-family:monospace}
+  .tip-prompt{color:#4ade80;font-size:0.78rem;margin-bottom:0.5rem}
+  .tip-cmd{color:#e2e8f0;font-size:0.83rem;line-height:1.6}
+  .tip-cmd .k{color:#f472b6}
+  .tip-cmd .v{color:#38bdf8}
+  .tip-tag{display:inline-block;background:#0c2a3f;color:#38bdf8;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-top:0.6rem;font-family:'Segoe UI',sans-serif}
+
+  /* FOOTER */
+  footer{background:#060912;border-top:1px solid #1e293b;padding:2.5rem 2rem;text-align:center}
+  footer p{color:#475569;font-size:0.85rem}
+  footer strong{color:#38bdf8}
+
+  /* DIVIDER */
+  .divider{width:60px;height:3px;background:linear-gradient(90deg,#38bdf8,#818cf8);border-radius:4px;margin:0.75rem 0 2rem}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">⬡ SP Guide</div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#guides">Guides</a>
+    <a href="#tips">Tips</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('guides').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📋 SharePoint Made Simple</div>
+  <h1>Stop Struggling with SharePoint. Start Getting Things Done.</h1>
+  <p>Step-by-step click guides for everyday SharePoint tasks — no IT ticket required.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('guides').scrollIntoView({behavior:'smooth'})">Explore Guides ↓</button>
+    <button class="btn-secondary" onclick="document.getElementById('tips').scrollIntoView({behavior:'smooth'})">Quick Tips</button>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<div class="section">
+  <div class="section-label">The Problem</div>
+  <div class="section-title">SharePoint can be frustrating. You're not alone.</div>
+  <div class="divider"></div>
+  <div class="pain-grid">
+    <div class="pain-card"><div class="pain-icon">😤</div><div><h4>Can't edit a page</h4><p>That Edit button is hiding — and when you find it, you're not sure what to do next.</p></div></div>
+    <div class="pain-card"><div class="pain-icon">📁</div><div><h4>Lost files</h4><p>Documents disappear into libraries with no clear structure or search path.</p></div></div>
+    <div class="pain-card"><div class="pain-icon">🔒</div><div><h4>Permission errors</h4><p>"You don't have access" — but you have no idea who to ask or what to request.</p></div></div>
+    <div class="pain-card"><div class="pain-icon">🧭</div><div><h4>Navigation chaos</h4><p>Too many sites, hubs, and subsites — hard to know where anything lives.</p></div></div>
+    <div class="pain-card"><div class="pain-icon">📰</div><div><h4>Posting news</h4><p>You want to share an update but the News Web Part is nowhere obvious.</p></div></div>
+    <div class="pain-card"><div class="pain-icon">🔗</div><div><h4>Sharing links</h4><p>Unsure if sharing means public access or just your team — scary to click.</p></div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-bg" id="features">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">What You'll Learn</div>
+    <div class="section-title">Everything you need to use SharePoint confidently</div>
+    <div class="divider"></div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon">✏️</div><h3>Page Editing</h3><p>Edit, format, and publish pages using the modern editor — including adding text, images, and web parts.</p></div>
+    <div class="feat-card"><div class="feat-icon">📂</div><h3>Document Libraries</h3><p>Upload, organize, version, and share files with your team in structured libraries.</p></div>
+    <div class="feat-card"><div class="feat-icon">🗺️</div><h3>Site Navigation</h3><p>Understand hub sites, subsites, and how to update the top or left navigation menus.</p></div>
+    <div class="feat-card"><div class="feat-icon">🔐</div><h3>Permissions & Sharing</h3><p>Control who sees what — set page, library, or file-level permissions confidently.</p></div>
+    <div class="feat-card"><div class="feat-icon">📰</div><h3>News & Announcements</h3><p>Post company or team news with images, links, and publish to the right audience.</p></div>
+    <div class="feat-card"><div class="feat-icon">📋</div><h3>Lists & Views</h3><p>Create lists, add columns, and use views to filter and sort data for your team.</p></div>
+  </div>
+</div>
+
+<!-- STEP-BY-STEP GUIDES -->
+<div class="section" id="guides">
+  <div class="section-label">Step-by-Step Guides</div>
+  <div class="section-title">Click-by-click instructions for common tasks</div>
+  <div class="section-sub">Expand any guide below and follow along directly in SharePoint.</div>
+  <div class="guide-list">
+
+    <!-- Guide 1 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">1</div> How to Edit & Publish a Page</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>Navigate to the SharePoint page you want to edit.</li>
+          <li>In the top-right area, click <span class="click">Edit</span> (pencil icon). The page will enter edit mode with a toolbar at the top.</li>
+          <li>Click on any text section to start editing. A formatting toolbar will appear above.</li>
+          <li>To add a new section or web part, hover between sections and click the <span class="click">+</span> icon that appears.</li>
+          <li>To add an image, click <span class="click">+</span> → choose <strong>Image</strong> → upload from your device or OneDrive.</li>
+          <li>When done, click <span class="click">Republish</span> (top-right) to save and publish your changes live.</li>
+          <li>If you only want to save as draft, click <span class="click">Save as draft</span> instead.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Guide 2 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">2</div> How to Upload Files to a Document Library</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>Go to your SharePoint site and click <span class="click">Documents</span> in the left navigation (or <strong>Site Contents → Documents</strong>).</li>
+          <li>Click <span class="click">Upload</span> in the top menu → choose <strong>Files</strong> or <strong>Folder</strong>.</li>
+          <li>Browse and select the file(s) from your computer. They will upload and appear in the library.</li>
+          <li>To organise, click <span class="click">+ New</span> → <strong>Folder</strong> to create folders first, then drag files into them.</li>
+          <li>To rename a file, click the <strong>three dots (…)</strong> next to the file → select <span class="click">Rename</span>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Guide 3 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">3</div> How to Share a File or Folder</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>In your Document Library, hover over the file and click the <strong>three dots (…)</strong> next to it.</li>
+          <li>Click <span class="click">Share</span>. A sharing panel will appear on the right.</li>
+          <li>Under <strong>"Send Link"</strong>, choose who can access: <strong>People in your organisation</strong> (recommended) or <strong>Specific people</strong>.</li>
+          <li>Type the name or email of the person you want to share with.</li>
+          <li>Set permission level: <strong>Can view</strong> (read-only) or <strong>Can edit</strong>.</li>
+          <li>Click <span class="click">Send</span> — they'll receive an email with the link.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Guide 4 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">4</div> How to Post a News Article</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>Go to your SharePoint site homepage.</li>
+          <li>Click <span class="click">+ New</span> in the top command bar → select <strong>News post</strong>.</li>
+          <li>Choose a layout template (e.g. Blank, Visual, Side-by-side).</li>
+          <li>Click the title area to type your news headline.</li>
+          <li>Click below the title to add body text, images, or links using the <span class="click">+</span> web part button.</li>
+          <li>Add a thumbnail image by clicking the camera icon in the top banner area.</li>
+          <li>When ready, click <span class="click">Post news</span> (top right) — your news item will appear on the homepage news feed.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Guide 5 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">5</div> How to Create a List</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>On your site, click <span class="click">+ New</span> → <strong>List</strong>.</li>
+          <li>Choose <strong>Blank list</strong> or start from a template (e.g. Task tracker, Issue tracker).</li>
+          <li>Give the list a name and click <span class="click">Create</span>.</li>
+          <li>To add columns, click <span class="click">+ Add column</span> on the right of the header row → choose type (Text, Date, Choice, etc.).</li>
+          <li>To add a new row/item, click <span class="click">+ New item</span> → fill in the fields → click <span class="click">Save</span>.</li>
+          <li>To filter or sort, click the column header → use the dropdown options.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Guide 6 -->
+    <div class="guide-item">
+      <div class="guide-header" onclick="toggle(this)">
+        <div class="guide-title"><div class="guide-num">6</div> How to Update the Site Navigation</div>
+        <div class="guide-arrow">▶</div>
+      </div>
+      <div class="guide-body">
+        <ol class="steps">
+          <li>You must be a Site Owner or have edit permissions. Go to your site.</li>
+          <li>Click <span class="click">Edit</span> at the bottom of the left navigation panel (you'll see a pencil icon).</li>
+          <li>To add a link, click <span class="click">+ Add link</span> → paste the URL and set a display name → click <span class="click">OK</span>.</li>
+          <li>To reorder items, drag the <strong>⠿ handle</strong> to the left of each item up or down.</li>
+          <li>To remove a link, hover over it → click the <strong>three dots (…)</strong> → select <span class="click">Remove</span>.</li>
+          <li>Click <span class="click">Save</span> when done. Changes are live immediately.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- QUICK TIPS -->
+<div class="tips-bg" id="tips">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Pro Tips</div>
+    <div class="section-title" style="margin-bottom:0.5rem">Quick wins for everyday use</div>
+    <div class="divider"></div>
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tip-prompt">$ tip --shortcut</div><div class="tip-cmd"><span class="k">Press</span> <span class="v">Ctrl + E</span> on any SharePoint page to instantly jump into Edit mode without hunting for the button.</div><div class="tip-tag">Keyboard shortcut</div></div>
+      <div class="tip-card"><div class="tip-prompt">$ tip --search</div><div class="tip-cmd">Use the <span class="v">Search bar</span> at the top of any site — it searches <span class="k">files, pages, and people</span> across your entire SharePoint environment.</div><div class="tip-tag">Search</div></div>
+      <div class="tip-card"><div class="tip-prompt">$ tip --version</div><div class="tip-cmd">SharePoint keeps <span class="v">version history</span> for all files. Right-click a file → <span class="k">Version history</span> to restore a previous version.</div><div class="tip-tag">File recovery</div></div>
+      <div class="tip-card"><div class="tip-prompt">$ tip --coauthor</div><div class="tip-cmd">Multiple people can edit the same Word/Excel file at once. Open the file → click <span class="v">Edit in Browser</span> to co-author in real time.</div><div class="tip-tag">Collaboration</div></div>
+      <div class="tip-card"><div class="tip-prompt">$ tip --pinned</div><div class="tip-cmd">Pin frequently used sites: go to the <span class="v">SharePoint home</span> → hover a site card → click the <span class="k">pin icon</span> to keep it at the top.</div><div class="tip-tag">Organisation</div></div>
+      <div class="tip-card"><div class="tip-prompt">$ tip --alert</div><div class="tip-cmd">Get email alerts when files change: select a file → <span class="k">…</span> → <span class="v">Alert me</span> → set frequency (immediately / daily / weekly).</div><div class="tip-tag">Notifications</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>SharePoint Learning Hub</strong> — A quick-reference guide for everyday users</p>
+  <p style="margin-top:0.5rem;font-size:0.78rem">Not affiliated with Microsoft. All steps based on SharePoint Online (Microsoft 365).</p>
+</footer>
+
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector('.guide-arrow');
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.guide-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.guide-arrow').forEach(a => { a.style.transform = 'rotate(0deg)' });
+    if (!isOpen) {
+      body.classList.add('open');
+      arrow.style.transform = 'rotate(90deg)';
+    }
+  }
+</script>
+</body>
+</html>
